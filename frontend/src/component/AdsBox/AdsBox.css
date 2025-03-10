@@ -1,0 +1,73 @@
+.reading-experience-section {
+  background: black;
+  color: white;
+  padding: 50px 0;
+}
+
+.category-badge {
+  display: inline-block;
+  color: #28a745;
+  font-size: 16px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.time-box {
+  text-align: center;
+  background: white;
+  color: black;
+  padding: 10px;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.time-box p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.btn-buy {
+  background: #28a745;
+  border: none;
+  padding: 10px 20px;
+}
+
+.btn-rent {
+  background: #dc3545;
+  border: none;
+  padding: 10px 20px;
+}
+
+.image-container {
+  position: relative;
+  width: 300px;
+}
+
+.light-bg {
+  position: absolute;
+  width: 450px; /* Increased size */
+  filter: blur(40px); /* Adds soft fade effect */
+  opacity: 0.6; /* Light fade */
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Enlarged Book Image */
+.books-img {
+  position: relative;
+  width: 400px; /* Increased size */
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.books-img:hover {
+  transform: scale(1.05); /* Small hover effect */
+}
