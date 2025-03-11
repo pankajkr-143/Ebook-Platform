@@ -1,0 +1,39 @@
+.footer {
+  background: #000;
+  color: #fff;
+  padding: 40px 0;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #ff4b5c;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.footer .form-control {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.footer .form-control::placeholder {
+  color: #bbb;
+}
+
+.footer .input-group-text {
+  background: #ff4b5c;
+  border: none;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}

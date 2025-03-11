@@ -1,0 +1,81 @@
+/* Header.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.navbar-menu li {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.navbar-menu .active {
+  font-weight: bold;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.navbar-right img{
+  cursor: pointer;
+}
+
+.search-bar-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.search-bar-input input {
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .hamburger {
+      display: block;
+  }
+
+  .navbar-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: white;
+      width: 200px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+      transition: transform 0.3s ease-in-out;
+      transform: translateY(-100%);
+      z-index: 1000; /* Ensure it appears above other elements */
+  }
+
+  .navbar-menu.open {
+      display: flex;
+      transform: translateY(0);
+  }
+}
