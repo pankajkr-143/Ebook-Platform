@@ -146,3 +146,92 @@ Example:
   "message": "Invalid email or password"
 }
 ```
+
+## Endpoint: `/api/users/profile`
+
+### Description
+
+This endpoint is used to get the profile of the logged-in user.
+
+### Method
+
+`GET`
+
+### Headers
+
+- `Authorization`: Bearer token (required)
+
+### Responses
+
+#### Success
+
+- **Status Code**: `200 OK`
+- **Response Body**: A JSON object containing the user details.
+
+Example:
+
+```json
+{
+  "_id": "60c72b2f9b1d4c3a4c8e4b8a",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
+```
+
+#### Authentication Errors
+
+- **Status Code**: `401 Unauthorized`
+- **Response Body**: A JSON object containing the authentication error message.
+
+Example:
+
+```json
+{
+  "message": "Access Denied"
+}
+```
+
+## Endpoint: `/api/users/logout`
+
+### Description
+
+This endpoint is used to log out the logged-in user.
+
+### Method
+
+`GET`
+
+### Headers
+
+- `Authorization`: Bearer token (required)
+
+### Responses
+
+#### Success
+
+- **Status Code**: `200 OK`
+- **Response Body**: A JSON object containing the logout success message.
+
+Example:
+
+```json
+{
+  "message": "Logout successfully"
+}
+```
+
+#### Authentication Errors
+
+- **Status Code**: `401 Unauthorized`
+- **Response Body**: A JSON object containing the authentication error message.
+
+Example:
+
+```json
+{
+  "message": "Access Denied"
+}
+```
