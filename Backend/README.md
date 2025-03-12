@@ -84,3 +84,65 @@ Example:
   ]
 }
 ```
+
+## Endpoint: `/api/users/login`
+
+### Description
+
+This endpoint is used to log in an existing user.
+
+### Method
+
+`POST`
+
+### Request Body
+
+The request body should be a JSON object containing the following fields:
+
+- `email`: A string with a minimum length of 5 characters and must be a valid email (required)
+- `password`: A string with a minimum length of 6 characters (required)
+
+Example:
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Responses
+
+#### Success
+
+- **Status Code**: `200 OK`
+- **Response Body**: A JSON object containing the user details and a JWT token.
+
+Example:
+
+```json
+{
+  "user": {
+    "_id": "60c72b2f9b1d4c3a4c8e4b8a",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Authentication Errors
+
+- **Status Code**: `401 Unauthorized`
+- **Response Body**: A JSON object containing the authentication error message.
+
+Example:
+
+```json
+{
+  "message": "Invalid email or password"
+}
+```
