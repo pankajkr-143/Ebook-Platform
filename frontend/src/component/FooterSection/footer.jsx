@@ -4,7 +4,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin, FaPaperPlane } from "r
 import './Footer.css'
 const footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer" id="footer-section">
       <Container>
         <Row className="gy-4">
           {/* BookByRent - Subscription Section */}
@@ -67,7 +67,7 @@ const footer = () => {
 
         {/* Copyright Section */}
         <hr className="my-4" />
-        <p className="text-center">© Copyright Rimel 2022. All rights reserved</p>
+        <p className="text-center">© Copyright Rimel 2025. All rights reserved</p>
       </Container>
     </footer>
   );

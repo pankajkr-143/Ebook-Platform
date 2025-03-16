@@ -4,7 +4,7 @@ import './App.css'
 
 const HomePage = () => {
   return (
-    <>
+    <div id="home">
 
       {/* Main Layout */}
       <Container fluid>
@@ -66,7 +66,7 @@ const HomePage = () => {
 
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
 

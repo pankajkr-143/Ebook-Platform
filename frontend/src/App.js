@@ -9,12 +9,16 @@ import ProductList from './component/ExploreProduct/ProductList';
 import BookCollection from './component/BookCollection/BookCollection';
 import BookList from './component/Footer/bookList/bookList';
 import Footer from './component/FooterSection/footer';
+import { useState } from 'react';
+import LoginPopup from './component/LoginPopup/LoginPopup';
 
 function App() {
+  const [Showlogin,setShowLogin]=useState(false)
   return (
-   
+    <>
+    {Showlogin?<LoginPopup setShowLogin={setShowLogin}/>:<></>}
     <div className='app'>
-      <Header/>
+      <Header setShowLogin={setShowLogin}/>
       <HomePage/>
       <FlashSales/>
       <Category/>
@@ -24,7 +28,7 @@ function App() {
      <BookCollection/>
      <Footer/>
     </div>
-
+    </>
   );
 }
 

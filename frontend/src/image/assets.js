@@ -15,6 +15,7 @@ import largebook1 from './largebook.png'
 import largebook2 from './largebook2.png'
 import largebook3 from './largebook3.png'
 import largebook4 from './largebook4.png'
+import cross from './cross_icon.png'
 
 
 export const assets={
@@ -23,5 +24,5 @@ export const assets={
   rightArrow,
   leftArrow,
   book1,book2,book3,book4,rectangle,books,light
-  ,largebook1,largebook2,largebook3,largebook4
+  ,largebook1,largebook2,largebook3,largebook4,cross
 }
