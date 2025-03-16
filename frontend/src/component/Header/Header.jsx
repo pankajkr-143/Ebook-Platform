@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/auth';
 import './Header.css';
 import { assets } from '../../image/assets';
 
 function Header() {
+  const navigate = useNavigate();
   const { isLoggedIn, user } = useAuth();
   const [menu, setMenu] = useState("Home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   // const isLoggedIn = !!user;
-   // Define this variable or get it from your auth context/store
+  // Define this variable or get it from your auth context/store
 
   const handleLinkClick = () => setMobileMenuOpen(false);
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+
+  const heartRedirect = () => {
+    navigate("/heartPage");
+  };
+
+  const cartRedirect = () => {
+    navigate("/cartBoxPage");
+  };
+
 
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
@@ -52,8 +62,8 @@ function Header() {
             About
           </Link>
         </li>
-        </ul>
-{/*         
+      </ul>
+      {/*         
         <li
           onClick={() => setMenu("Sign up")}
           className={menu === "Sign up" ? "active" : ""}
@@ -70,35 +80,35 @@ function Header() {
             Login
           </Link>
         </li> */}
-        
-         {isLoggedIn ? (
-          <div >
-            <button
-              onClick={toggleDropdown}
-            >
-              {user ? user.fullname.firstname: "Loading..."}
-            </button>
-            {isDropdownOpen && (
-              <div >
-                <Link
-                  to="/logout"
-                  onClick={handleLinkClick}
-                >
-                  Logout
-                </Link>
-              </div>
-            )}
-          </div>
-        ) : (
-          <>
-            <Link to="/login" onClick={handleLinkClick}>
-              Login
-            </Link>
-            <Link to="/signup" onClick={handleLinkClick}>
-              Signup
-            </Link>
-            </>
-        )}
+
+      {isLoggedIn ? (
+        <div >
+          <button
+            onClick={toggleDropdown}
+          >
+            {user ? user.fullname.firstname : "Loading..."}
+          </button>
+          {isDropdownOpen && (
+            <div >
+              <Link
+                to="/logout"
+                onClick={handleLinkClick}
+              >
+                Logout
+              </Link>
+            </div>
+          )}
+        </div>
+      ) : (
+        <>
+          <Link to="/login" onClick={handleLinkClick}>
+            Login
+          </Link>
+          <Link to="/signup" onClick={handleLinkClick}>
+            Signup
+          </Link>
+        </>
+      )}
       <div className='navbar-right'>
         <div className="search-bar">
           <div className='search-bar-input'>
@@ -107,8 +117,12 @@ function Header() {
           </div>
         </div>
 
-        <img src={assets.heart} alt="" />
-        <img src={assets.cartBox} alt="" />
+        <button onClick={heartRedirect}>
+          <img src={assets.heart} alt="" />
+        </button>
+        <button onClick={cartRedirect}>
+          <img src={assets.cartBox} alt="" />
+        </button>
 
       </div>
     </div>

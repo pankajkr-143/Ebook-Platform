@@ -11,6 +11,8 @@ import BookCollection from "./component/BookCollection/BookCollection";
 import BookList from "./component/Footer/bookList/bookList";
 import Footer from "./component/FooterSection/footer";
 import { AuthProvider } from "./store/auth";
+import HeartPage from "./heartPage";
+import CartBoxPage from "./cartBoxPage";
 import Signup from "./signup";
 import Login from "./login";
 import {Logout} from "./logout";
@@ -38,6 +40,8 @@ const App = () => {
             }
           />
 
+          <Route path="/heartPage" element={<HeartPage />} />
+          <Route path="/cartBoxPage" element={<CartBoxPage />}/>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />}/>
