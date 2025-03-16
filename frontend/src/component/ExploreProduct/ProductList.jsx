@@ -115,7 +115,9 @@ const ProductCard = ({ product }) => {
         <Card.Img variant="top" src={product.image} className="product-img"  />
         <div className="wishlist-icons position-absolute top-0 end-0 p-2">
           <div className="d-flex flex-column gap-3">
-          <FaHeart className="icon me-2" />
+            <button>
+            <FaHeart className="icon me-2" />
+            </button>
           <FaEye className="icon" />
           </div>
          
