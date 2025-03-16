@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Header.css'
 import { assets } from '../../image/assets'
 
@@ -14,10 +14,10 @@ function Header() {
   const handleLinkClick = () => setMobileMenuOpen(false);
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
 
-  useEffect(() => {
-    console.log("isLoggedIn:", isLoggedIn);
-    console.log("user:", user);
-  }, [isLoggedIn, user]);
+  // useEffect(() => {
+  //   console.log("isLoggedIn:", isLoggedIn);
+  //   console.log("user:", user);
+  // }, [isLoggedIn, user]);
 
   return (
     <div className='navbar'>

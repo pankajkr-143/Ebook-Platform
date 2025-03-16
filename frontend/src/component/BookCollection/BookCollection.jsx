@@ -42,7 +42,7 @@ const BookCollection = () => {
             <Card className="book-card d-block align-items-center flex-column ">
               <Card.Img src={book.image} className="book-img" />
               <Card.ImgOverlay className="d-flex flex-column justify-content-end">
-                <Card.Title className="fw-bold text-danger" variant="black">{book.title}</Card.Title>
+              <p className="text-center text-danger fs-3">{book.title}</p>
                 {book.subtitle && <Card.Subtitle className="text-dange">{book.subtitle}</Card.Subtitle>}
                 <Card.Text className="text-dange">{book.description}</Card.Text>
                 <Button variant="light" size="sm" className="bg-danger">Shop Now</Button>

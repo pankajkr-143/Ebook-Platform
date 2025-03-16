@@ -76,7 +76,7 @@ const FlashSale = () => {
                </div>
                 <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img"/>
                 <Card.Body>
-                  <Card.Title>{product.title}</Card.Title>
+                  <p className="text-center fs-3">{product.title}</p>
                   <div className="d-flex align-items-center">
                     <span className="text-danger fw-bold">${product.price}</span>
                     <span className="text-muted ms-2 text-decoration-line-through">${product.originalPrice}</span>
