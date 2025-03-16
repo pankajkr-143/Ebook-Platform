@@ -21,7 +21,7 @@
   padding: 10px;
   
 }
-.navbar-menu li{
+.navbar-menu a,li{
   cursor: pointer;
 }
 a{
