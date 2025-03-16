@@ -16,6 +16,8 @@ import CartBoxPage from "./cartBoxPage";
 import Signup from "./signup";
 import Login from "./login";
 import {Logout} from "./logout";
+import { useState } from 'react';
+import LoginPopup from './component/LoginPopup/LoginPopup';
 
 const App = () => {
   return (
@@ -46,10 +48,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />}/>
 
-        </Routes>
-        </AuthProvider>
-      </Router>
-    </div>
   );
 };
 

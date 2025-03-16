@@ -83,6 +83,20 @@ const FlashSale = () => {
                       <img src={assets.heart} alt="" />
                     </button>
                     <img src={assets.View} alt="" />
+               </div>
+                <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img"/>
+                <Card.Body>
+                  <p className="text-center fs-3">{product.title}</p>
+                  <div className="d-flex align-items-center">
+                    <span className="text-danger fw-bold">${product.price}</span>
+                    <span className="text-muted ms-2 text-decoration-line-through">${product.originalPrice}</span>
+                  </div>
+                  <div>
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} color={i < product.rating ? "#ffc107" : "#e4e5e9"} />
+                    ))}
+                    <small className="ms-2">({product.reviews})</small>
+
                   </div>
                   <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img" />
                   <Card.Body>

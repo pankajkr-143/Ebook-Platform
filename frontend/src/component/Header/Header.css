@@ -16,9 +16,18 @@
   gap: 20px;
 }
 
-.navbar-menu li {
+.navbar-menu li a{
   cursor: pointer;
   padding: 10px;
+  
+}
+.navbar-menu a,li{
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
 }
 
 .navbar-menu .active {

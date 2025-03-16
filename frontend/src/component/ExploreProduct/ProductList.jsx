@@ -124,7 +124,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <Card.Body className="text-center">
-        <Card.Title className="product-title">{product.title}</Card.Title>
+      <p className="text-center fs-3">{product.title}</p>
         <Card.Text className="product-price text-danger">${product.price}</Card.Text>
         <div className="rating">
           {renderStars(product.rating)} ({product.reviews})

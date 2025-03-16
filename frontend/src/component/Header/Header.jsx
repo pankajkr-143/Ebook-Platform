@@ -25,11 +25,15 @@ function Header() {
     navigate("/cartBoxPage");
   };
 
-
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
     console.log("user:", user);
   }, [isLoggedIn, user]);
+  
+function Header({ setShowLogin }) {
+  const [menu, setMenu] = useState("Home");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   return (
     <div className='navbar'>
@@ -109,24 +113,24 @@ function Header() {
           </Link>
         </>
       )}
+
       <div className='navbar-right'>
         <div className="search-bar">
           <div className='search-bar-input'>
-            <input type="text" placeholder='Which book are looking for?' />
-            <img src={assets.Search} alt="" />
+            <input type="text" placeholder='Which book are you looking for?' />
+            <img src={assets.Search} alt="Search Icon" />
           </div>
         </div>
 
         <button onClick={heartRedirect}>
-          <img src={assets.heart} alt="" />
+          <img src={assets.heart} alt="Favorite" />
         </button>
         <button onClick={cartRedirect}>
-          <img src={assets.cartBox} alt="" />
+          <img src={assets.cartBox} alt="Cart" />
         </button>
-
       </div>
     </div>
-  )
+  );
 }
 
 export default Header;
