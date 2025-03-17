@@ -29,11 +29,6 @@ function Header() {
     console.log("isLoggedIn:", isLoggedIn);
     console.log("user:", user);
   }, [isLoggedIn, user]);
-  
-function Header({ setShowLogin }) {
-  const [menu, setMenu] = useState("Home");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
 
   return (
     <div className='navbar'>
@@ -131,6 +126,6 @@ function Header({ setShowLogin }) {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

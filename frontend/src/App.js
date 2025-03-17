@@ -15,9 +15,7 @@ import HeartPage from "./heartPage";
 import CartBoxPage from "./cartBoxPage";
 import Signup from "./signup";
 import Login from "./login";
-import {Logout} from "./logout";
-import { useState } from 'react';
-import LoginPopup from './component/LoginPopup/LoginPopup';
+import { Logout } from "./logout";
 
 const App = () => {
   return (
@@ -25,29 +23,31 @@ const App = () => {
       <Router>
         <AuthProvider>
           <Header />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <HomePage />
-                <FlashSales />
-                <Category />
-                <BookList />
-                <AdsBox />
-                <ProductList />
-                <BookCollection />
-                <Footer />
-              </>
-            }
-          />
-
-          <Route path="/heartPage" element={<HeartPage />} />
-          <Route path="/cartBoxPage" element={<CartBoxPage />}/>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />}/>
-
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <HomePage />
+                  <FlashSales />
+                  <Category />
+                  <BookList />
+                  <AdsBox />
+                  <ProductList />
+                  <BookCollection />
+                  <Footer />
+                </>
+              }
+            />
+            <Route path="/heartPage" element={<HeartPage />} />
+            <Route path="/cartBoxPage" element={<CartBoxPage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
+    </div>
   );
 };
 

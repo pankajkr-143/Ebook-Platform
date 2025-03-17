@@ -85,7 +85,6 @@ const FlashSale = () => {
                     <img src={assets.View} alt="" />
                </div>
                 <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img"/>
-                <Card.Body>
                   <p className="text-center fs-3">{product.title}</p>
                   <div className="d-flex align-items-center">
                     <span className="text-danger fw-bold">${product.price}</span>
