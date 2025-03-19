@@ -27,6 +27,12 @@ const FlashSale = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    products.forEach(product => {
+      console.log("Product:", product);
+    });
+  }, [products]);
+
   const formatTime = (seconds) => {
     const days = Math.floor(seconds / (3600 * 24));
     const hours = Math.floor((seconds % (3600 * 24)) / 3600);
@@ -48,6 +54,14 @@ const FlashSale = () => {
   const addToList = () => {
     navigate("/heartPage");
   };
+
+  const addToCart = (id) => {
+    // alert("Product added to cart", id);
+    
+    console.log("Product added to cart", id);
+    // navigate("/CartPage");
+  };
+
 
   return (
     <>
@@ -77,29 +91,15 @@ const FlashSale = () => {
                 <Card className="p-2 shadow-sm position-relative ">
                   <span className="badge bg-danger position-absolute top-0 end-0 m-2">-{product.discount}%</span>
                   <div className="inner-content-cart d-flex flex-column gap-2">
-                    <button 
-                    onClick={addToList}
-                    >
+                    <button onClick={addToList}>
                       <img src={assets.heart} alt="" />
                     </button>
                     <img src={assets.View} alt="" />
-               </div>
-                <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img"/>
-                  <p className="text-center fs-3">{product.title}</p>
-                  <div className="d-flex align-items-center">
-                    <span className="text-danger fw-bold">${product.price}</span>
-                    <span className="text-muted ms-2 text-decoration-line-through">${product.originalPrice}</span>
-                  </div>
-                  <div>
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} color={i < product.rating ? "#ffc107" : "#e4e5e9"} />
-                    ))}
-                    <small className="ms-2">({product.reviews})</small>
-
                   </div>
                   <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img" />
                   <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
+                    {/* <Card.Title>{product.title}</Card.Title> */}
+                    <h5>{product.title}</h5>
                     <div className="d-flex align-items-center">
                       <span className="text-danger fw-bold">${product.price}</span>
                       <span className="text-muted ms-2 text-decoration-line-through">${product.originalPrice}</span>
@@ -110,9 +110,10 @@ const FlashSale = () => {
                       ))}
                       <small className="ms-2">({product.reviews})</small>
                     </div>
-                    <Button className="w-100 mt-2" variant="dark">Add To Cart</Button>
+                    <Button className="w-100 mt-2" variant="dark" onClick={()=>addToCart(product.id)}>Add To Cart</Button>
                   </Card.Body>
                 </Card>
+                {/* {console.log("product:", product)} */}
               </Col>
             ))}
           </Row>
@@ -123,7 +124,6 @@ const FlashSale = () => {
         </div>
         <hr />
       </Container>
-
     </>
   );
 };
