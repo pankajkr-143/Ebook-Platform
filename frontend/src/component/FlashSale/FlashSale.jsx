@@ -2,20 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
+import products from "./FlashData";
 
 import './FlashSale.css'
 import { assets } from "../../image/assets";
 
-const products = [
-  { id: 1, title: "Life is a Gift", price: 120, originalPrice: 160, discount: 40, rating: 5, reviews: 88, image: `${assets.book1}` },
-  { id: 2, title: "What are you doing", price: 960, originalPrice: 1160, discount: 35, rating: 4, reviews: 75, image: `${assets.book2}` },
-  { id: 3, title: "Mistery", price: 370, originalPrice: 400, discount: 30, rating: 5, reviews: 99, image: `${assets.book1}` },
-  { id: 4, title: "Goals", price: 375, originalPrice: 400, discount: 25, rating: 5, reviews: 99, image: `${assets.book4}` },
-  { id: 5, title: "New Book", price: 250, originalPrice: 300, discount: 20, rating: 4, reviews: 80, image: `${assets.book1}` },
-  { id: 6, title: "Success Path", price: 420, originalPrice: 500, discount: 15, rating: 5, reviews: 150, image: `${assets.book2}` }
-];
+// const products = [
+//   { id: 1, title: "Life is a Gift", price: 120, originalPrice: 160, discount: 40, rating: 5, reviews: 88, image: `${assets.book1}` },
+//   { id: 2, title: "What are you doing", price: 960, originalPrice: 1160, discount: 35, rating: 4, reviews: 75, image: `${assets.book2}` },
+//   { id: 3, title: "Mistery", price: 370, originalPrice: 400, discount: 30, rating: 5, reviews: 99, image: `${assets.book1}` },
+//   { id: 4, title: "Goals", price: 375, originalPrice: 400, discount: 25, rating: 5, reviews: 99, image: `${assets.book4}` },
+//   { id: 5, title: "New Book", price: 250, originalPrice: 300, discount: 20, rating: 4, reviews: 80, image: `${assets.book1}` },
+//   { id: 6, title: "Success Path", price: 420, originalPrice: 500, discount: 15, rating: 5, reviews: 150, image: `${assets.book2}` }
+// ];
 
-const FlashSale = () => {
+const FlashSale = ({setProductId}) => {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(315596);
   const [startIndex, setStartIndex] = useState(0);
@@ -56,10 +58,10 @@ const FlashSale = () => {
   };
 
   const addToCart = (id) => {
-    // alert("Product added to cart", id);
-    
-    console.log("Product added to cart", id);
-    // navigate("/CartPage");
+    toast.success("Product added to cart", id);
+    setProductId(id);
+
+    // console.log("Product added to cart", id);
   };
 
 
@@ -85,6 +87,7 @@ const FlashSale = () => {
         </div>
 
         <div className="overflow-hidden position-relative">
+          <Toaster />
           <Row className="mt-4 flex-nowrap" style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(-${startIndex * 25}%)` }}>
             {products.map((product) => (
               <Col md={3} key={product.id} className="mb-4">
@@ -110,10 +113,9 @@ const FlashSale = () => {
                       ))}
                       <small className="ms-2">({product.reviews})</small>
                     </div>
-                    <Button className="w-100 mt-2" variant="dark" onClick={()=>addToCart(product.id)}>Add To Cart</Button>
+                    <Button className="w-100 mt-2" variant="dark" onClick={() => addToCart(product.id)}>Add To Cart</Button>
                   </Card.Body>
                 </Card>
-                {/* {console.log("product:", product)} */}
               </Col>
             ))}
           </Row>

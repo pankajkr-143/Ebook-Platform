@@ -1,46 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function CartBoxPage() {
 
-  const data = {
-    id: 1,
-    img: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6443/6443129_sd.jpg",
-    model: "Iphone 12",
-    description: "Apple Iphone 12 with 128GB",
-    price: "$799",
-    count: "1",
+function CartBoxPage({ cartAllProduct, setCartAllProduct }) {
+  // console.log("cartAllProduct", cartAllProduct);
+
+  const handleIncrement = (id) => {
+    setCartAllProduct((prev) =>
+      prev.map((product) =>
+        product.id === id ? { ...product, count: product.count + 1 } : product
+      )
+    );
   };
 
-  const handleIncrement = () => {
-    // count++;
-    console.log("Incremented");
-   };
-  const handleDecrement = () => {
-    // count--;
-    console.log("Decremented");
-   };
+  const handleDecrement = (id) => {
+    setCartAllProduct((prev) =>
+      prev.map((product) =>
+        product.id === id
+          ? { ...product, count: product.count > 1 ? product.count - 1 : 1 }
+          : product
+      )
+    );
+  };
+
+  const handleDeleteItem = (id) => {
+    setCartAllProduct((prev) => prev.filter((product) => product.id !== id));
+  };
 
   return (
     <div className="container-fluid">
       <div className="row p-3">
-        <div className="col-8 border rounded d-flex gap-3 align-items-center"> {/* Added d-flex and align-items-center */}
-          <div className="p-1 max-w-100px">
-            <img src={data?.img} alt={data?.model} style={{ height: "100px", width: "100px", objectFit: "contain" }} />
-          </div>
+        {
+          cartAllProduct?.map((product) => {
+            return (
+              <div className="col-8 border rounded d-flex gap-3 align-items-center"> {/* Added d-flex and align-items-center */}
+                <div className="p-1 max-w-100px">
+                  <img src={product?.image} alt={product?.model} style={{ height: "150px", width: "150px", objectFit: "contain" }} />
+                </div>
 
-          <div className="p-1">
-            <h5>{data?.model}</h5>
-            <p>{data?.description}</p>
-            <p>{data?.price}</p>
+                <div className="p-1">
+                  <h5>Title: {product?.title}</h5>
+                  <p>Price: {product?.price}</p>
+                  <p>OriginalPrice: {product?.originalPrice}</p>
+                  <p>Discount: {product?.discount}</p>
+                  <div className='d-flex gap-3 mt-1'>
+                    <p className='m-0 border p-0 px-2 py-1 rounded pointer' onClick={() => handleDecrement(product.id)}>-</p>
+                    <p className='m-0'>{product?.count}</p>
+                    <p className='m-0 border p-0 px-2 py-1 rounded pointer' onClick={() => handleIncrement(product.id)}>+</p>
 
-            <div className='d-flex gap-3 mt-1'>
-              <p className='m-0 border p-0 px-2 py-1 rounded pointer' onClick={handleDecrement}>-</p>
-              <p className='m-0'>{data?.count}</p>
-              <p className='m-0 border p-0 px-2 py-1 rounded pointer'onClick={handleIncrement}>+</p>
+                  </div>
+                </div>
 
-            </div>
-          </div>
-        </div>
+                <div className='d-flex'>
+                  <p onClick={() => handleDeleteItem(product.id)}>
+                    <b>Delete</b>
+                  </p>
+                </div>
+              </div>
+            )
+          })
+        }
+        {cartAllProduct.length == 0 && <div className="col-12">
+          <h1 className='text-center fs-3'>
+            No Products in Cart.
+          </h1>
+        </div>}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import HomePage from "./HomePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,20 +16,30 @@ import CartBoxPage from "./cartBoxPage";
 import Signup from "./signup";
 import Login from "./login";
 import { Logout } from "./logout";
+import products from "./component/FlashSale/FlashData";
 
 const App = () => {
+  const [productId, setProductId] = useState("");
+  const [cartAllProduct, setCartAllProduct] = useState([]);
+  const filterdObject = products.filter((product) => product.id == productId);
+
+  useEffect(() => {
+    const filterdObject = products.filter((product) => product.id == productId);
+    setCartAllProduct([...cartAllProduct, ...filterdObject]);
+  }, [productId]);
+
   return (
     <div className="app">
       <Router>
         <AuthProvider>
-          <Header />
+          <Header cartAllProduct={cartAllProduct} />
           <Routes>
             <Route
               path="/"
               element={
                 <>
                   <HomePage />
-                  <FlashSales />
+                  <FlashSales setProductId={setProductId} />
                   <Category />
                   <BookList />
                   <AdsBox />
@@ -40,7 +50,15 @@ const App = () => {
               }
             />
             <Route path="/heartPage" element={<HeartPage />} />
-            <Route path="/cartBoxPage" element={<CartBoxPage />} />
+            <Route
+              path="/cartBoxPage"
+              element={
+                <CartBoxPage
+                  cartAllProduct={cartAllProduct}
+                  setCartAllProduct={setCartAllProduct}
+                />
+              }
+            />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
