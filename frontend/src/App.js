@@ -17,15 +17,32 @@ import Signup from "./signup";
 import Login from "./login";
 import { Logout } from "./logout";
 import products from "./component/FlashSale/FlashData";
+import ExpProducts from "./component/ExploreProduct/ExploreData";
 
 const App = () => {
   const [productId, setProductId] = useState("");
   const [cartAllProduct, setCartAllProduct] = useState([]);
-  const filterdObject = products.filter((product) => product.id == productId);
 
   useEffect(() => {
     const filterdObject = products.filter((product) => product.id == productId);
-    setCartAllProduct([...cartAllProduct, ...filterdObject]);
+    const filterdObjectExpD = ExpProducts.filter(
+      (product) => product.id == productId
+    );
+
+    const combinedFilteredObjects = [...filterdObject, ...filterdObjectExpD];
+
+    if (combinedFilteredObjects.length > 0) {
+      setCartAllProduct((prevCart) => {
+        // Check if the product is already in the cart
+        const isProductInCart = prevCart.some(
+          (product) => product.id == productId
+        );
+        if (!isProductInCart) {
+          return [...prevCart, ...combinedFilteredObjects];
+        }
+        return prevCart;
+      });
+    }
   }, [productId]);
 
   return (
@@ -43,7 +60,7 @@ const App = () => {
                   <Category />
                   <BookList />
                   <AdsBox />
-                  <ProductList />
+                  <ProductList setProductId={setProductId} />
                   <BookCollection />
                   <Footer />
                 </>
