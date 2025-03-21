@@ -102,6 +102,10 @@ function Header({cartAllProduct}) {
 
         <button onClick={heartRedirect}>
           <img src={assets.heart} alt="Favorite" />
+          <span className='text-decoratin-none py-1 px-2 rounded-pill' style={{backgroundColor:'orange'}}>
+            {/* {cartAllProduct.length} */}
+            {cartAllProduct?.length}  
+          </span>
         </button>
         <button onClick={cartRedirect}>
           <img src={assets.cartBox} alt="Cart" />
