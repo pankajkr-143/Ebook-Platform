@@ -35,6 +35,16 @@ const ProductCard = ({ product, setProductId }) => {
 
     console.log("Product added to cart", id);
   };
+
+  
+  const addToList = (id) => {
+    toast.success("Product added to wishList", id);
+    setProductId(id);
+
+    console.log("Product added to wishList", id);
+
+  };
+
   return (
     <Card className="product-card p-2 shadow-sm">
       
@@ -42,7 +52,7 @@ const ProductCard = ({ product, setProductId }) => {
         <Card.Img variant="top" src={product.image} className="product-img"  />
         <div className="wishlist-icons position-absolute top-0 end-0 p-2">
           <div className="d-flex flex-column gap-3">
-            <button>
+            <button onClick={() => addToList(product.id)}>
             <FaHeart className="icon me-2" />
             </button>
           <FaEye className="icon" />
@@ -64,13 +74,6 @@ const ProductCard = ({ product, setProductId }) => {
 
 // Main Product Listing Page
 const ProductList = ({ setProductId }) => {
-  const navigate = useNavigate;
-
-  const addToList = () => {
-    navigate("/heartPage");
-  };
-
-  
 
   return (
     <Container className="py-5 mt-5">

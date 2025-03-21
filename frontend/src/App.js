@@ -22,6 +22,7 @@ import ExpProducts from "./component/ExploreProduct/ExploreData";
 const App = () => {
   const [productId, setProductId] = useState("");
   const [cartAllProduct, setCartAllProduct] = useState([]);
+  
 
   useEffect(() => {
     const filterdObject = products.filter((product) => product.id == productId);
@@ -29,7 +30,10 @@ const App = () => {
       (product) => product.id == productId
     );
 
-    const combinedFilteredObjects = [...filterdObject, ...filterdObjectExpD];
+    const combinedFilteredObjects = [...filterdObject, ...filterdObjectExpD].map(product => ({
+      ...product,
+      count: 1 // Initialize count property
+    }));
 
     if (combinedFilteredObjects.length > 0) {
       setCartAllProduct((prevCart) => {
@@ -66,7 +70,12 @@ const App = () => {
                 </>
               }
             />
-            <Route path="/heartPage" element={<HeartPage />} />
+            <Route path="/heartPage" 
+                    element={
+                    <HeartPage
+                    cartAllProduct={cartAllProduct}
+                  setCartAllProduct={setCartAllProduct}
+                   />} />
             <Route
               path="/cartBoxPage"
               element={

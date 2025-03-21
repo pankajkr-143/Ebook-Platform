@@ -44,8 +44,10 @@ const FlashSale = ({setProductId}) => {
     setStartIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
   };
 
-  const addToList = () => {
-    navigate("/heartPage");
+  const addToList = (id) => {
+    toast.success("Product added to wishList", id);
+    setProductId(id);
+    console.log("Product added to wishList", id);
   };
 
   const addToCart = (id) => {
@@ -84,7 +86,7 @@ const FlashSale = ({setProductId}) => {
                 <Card className="p-2 shadow-sm position-relative ">
                   <span className="badge bg-danger position-absolute top-0 end-0 m-2">-{product.discount}%</span>
                   <div className="inner-content-cart d-flex flex-column gap-2">
-                    <button onClick={addToList}>
+                    <button onClick={() => addToList(product.id)}>
                       <img src={assets.heart} alt="" />
                     </button>
                     <img src={assets.View} alt="" />
