@@ -1,91 +1,11 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaHeart, FaEye, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { assets } from "../../image/assets";
+import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
-// Sample product data
-const products = [
-  {
-    id: 1,
-    title: "Book name",
-    price: 100,
-    image: `${assets.book1}`,
-    reviews: 35,
-    rating: 4,
-    isNew: false,
-    addToCart: true,
-  },
-  {
-    id: 2,
-    title: "Book name",
-    price: 360,
-    image:  `${assets.book1}`,
-    reviews: 95,
-    rating: 4.5,
-    isNew: false,
-    addToCart: true,
-  },
-  {
-    id: 3,
-    title: "Book name",
-    price: 700,
-    image:  `${assets.book1}`,
-    reviews: 325,
-    rating: 4,
-    isNew: false,
-    addToCart: true,
-  },
-  {
-    id: 4,
-    title: "Book name",
-    price: 500,
-    image:  `${assets.book1}`,
-    reviews: 145,
-    rating: 4,
-    isNew: false,
-    addToCart: true,
-  },
-  {
-    id: 5,
-    title: "Book name",
-    price: 960,
-    image:  `${assets.book1}`,
-    reviews: 85,
-    rating: 4,
-    isNew: true,
-    addToCart: true,
-  },
-  {
-    id: 6,
-    title: "Book name",
-    price: 1160,
-    image:  `${assets.book1}`,
-    reviews: 35,
-    rating: 3.5,
-    isNew: false,
-    addToCart: true,
-  },
-  {
-    id: 7,
-    title: "Book name",
-    price: 660,
-    image:  `${assets.book1}`,
-    reviews: 55,
-    rating: 4,
-    isNew: true,
-    addToCart: true,
-  },
-  {
-    id: 8,
-    title: "Book name",
-    price: 660,
-    image:  `${assets.book1}`,
-    reviews: 55,
-    rating: 4,
-    isNew: false,
-    addToCart: true,
-  },
-];
+import ExpProducts from "./ExploreData";
 
 // Function to render stars based on rating
 const renderStars = (rating) => {
@@ -107,7 +27,14 @@ const renderStars = (rating) => {
 };
 
 // Product Card Component
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setProductId }) => {
+
+  const addToCart = (id) => {
+    toast.success("Product added to cart", id);
+    setProductId(id);
+
+    console.log("Product added to cart", id);
+  };
   return (
     <Card className="product-card p-2 shadow-sm">
       
@@ -129,14 +56,22 @@ const ProductCard = ({ product }) => {
         <div className="rating">
           {renderStars(product.rating)} ({product.reviews})
         </div>
-        {product.addToCart && <Button variant="dark" className="w-100 mt-2">Add To Cart</Button>}
+        <Button variant="dark" className="w-100 mt-2" onClick={() => addToCart(product.id)}>Add To Cart</Button>
       </Card.Body>
     </Card>
   );
 };
 
 // Main Product Listing Page
-const ProductList = () => {
+const ProductList = ({ setProductId }) => {
+  const navigate = useNavigate;
+
+  const addToList = () => {
+    navigate("/heartPage");
+  };
+
+  
+
   return (
     <Container className="py-5 mt-5">
       <div className="d-flex align-items-center gap-2 mb-3">
@@ -152,9 +87,9 @@ const ProductList = () => {
               </div>
             </div>
       <Row className="g-4">
-        {products.map((product, index) => (
-          <Col key={index} md={3} sm={6}>
-            <ProductCard product={product} />
+        {ExpProducts.map((product) => (
+          <Col key={product?.id} md={3} sm={6}>
+            <ProductCard product={product} setProductId={setProductId} />
           </Col>
         ))}
       </Row>

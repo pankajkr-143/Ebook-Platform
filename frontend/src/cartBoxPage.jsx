@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 function CartBoxPage({ cartAllProduct, setCartAllProduct }) {
   // console.log("cartAllProduct", cartAllProduct);
 
@@ -32,7 +31,7 @@ function CartBoxPage({ cartAllProduct, setCartAllProduct }) {
         {
           cartAllProduct?.map((product) => {
             return (
-              <div className="col-8 border rounded d-flex gap-3 align-items-center"> {/* Added d-flex and align-items-center */}
+              <div key={product.id} className="col-8 border rounded d-flex gap-3 align-items-center"> {/* Added d-flex and align-items-center */}
                 <div className="p-1 max-w-100px">
                   <img src={product?.image} alt={product?.model} style={{ height: "150px", width: "150px", objectFit: "contain" }} />
                 </div>
@@ -46,14 +45,13 @@ function CartBoxPage({ cartAllProduct, setCartAllProduct }) {
                     <p className='m-0 border p-0 px-2 py-1 rounded pointer' onClick={() => handleDecrement(product.id)}>-</p>
                     <p className='m-0'>{product?.count}</p>
                     <p className='m-0 border p-0 px-2 py-1 rounded pointer' onClick={() => handleIncrement(product.id)}>+</p>
-
                   </div>
                 </div>
 
                 <div className='d-flex'>
-                  <p onClick={() => handleDeleteItem(product.id)}>
+                  <button onClick={() => handleDeleteItem(product.id)}>
                     <b>Delete</b>
-                  </p>
+                  </button>
                 </div>
               </div>
             )
