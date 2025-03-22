@@ -27,22 +27,17 @@ const renderStars = (rating) => {
 };
 
 // Product Card Component
-const ProductCard = ({ product, setProductId }) => {
-
+const ProductCard = ({ product, setProductId, setWishListProductId }) => {
   const addToCart = (id) => {
     toast.success("Product added to cart", id);
     setProductId(id);
-
     console.log("Product added to cart", id);
   };
 
-  
   const addToList = (id) => {
     toast.success("Product added to wishList", id);
-    setProductId(id);
-
+    setWishListProductId(id);
     console.log("Product added to wishList", id);
-
   };
 
   return (
@@ -73,7 +68,7 @@ const ProductCard = ({ product, setProductId }) => {
 };
 
 // Main Product Listing Page
-const ProductList = ({ setProductId }) => {
+const ProductList = ({ setProductId, setWishListProductId }) => {
 
   return (
     <Container className="py-5 mt-5">
@@ -92,7 +87,7 @@ const ProductList = ({ setProductId }) => {
       <Row className="g-4">
         {ExpProducts.map((product) => (
           <Col key={product?.id} md={3} sm={6}>
-            <ProductCard product={product} setProductId={setProductId} />
+            <ProductCard product={product} setProductId={setProductId} setWishListProductId={setWishListProductId} />
           </Col>
         ))}
       </Row>

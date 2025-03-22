@@ -57,7 +57,7 @@ function CartBoxPage({ cartAllProduct, setCartAllProduct }) {
             )
           })
         }
-        {cartAllProduct.length == 0 && <div className="col-12">
+        {cartAllProduct.length === 0 && <div className="col-12">
           <h1 className='text-center fs-3'>
             No Products in Cart.
           </h1>

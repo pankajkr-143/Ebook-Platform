@@ -4,7 +4,7 @@ import { useAuth } from '../../store/auth';
 import './Header.css';
 import { assets } from '../../image/assets';
 
-function Header({cartAllProduct}) {
+function Header({cartAllProduct, wishListAllProduct}) {
   const navigate = useNavigate();
   const { isLoggedIn, user } = useAuth();
   const [menu, setMenu] = useState("Home");
@@ -102,15 +102,13 @@ function Header({cartAllProduct}) {
 
         <button onClick={heartRedirect}>
           <img src={assets.heart} alt="Favorite" />
-          <span className='text-decoratin-none py-1 px-2 rounded-pill' style={{backgroundColor:'orange'}}>
-            {/* {cartAllProduct.length} */}
-            {cartAllProduct?.length}  
+          <span className='text-decoration-none py-1 px-2 rounded-pill' style={{backgroundColor:'orange'}}>
+            {wishListAllProduct?.length}  
           </span>
         </button>
         <button onClick={cartRedirect}>
           <img src={assets.cartBox} alt="Cart" />
           <span className='text-decoration-none py-1 px-2 rounded-pill' style={{backgroundColor:'orange'}}>
-            {/* {cartAllProduct.length} */}
             {cartAllProduct?.length}
           </span>
         </button>
