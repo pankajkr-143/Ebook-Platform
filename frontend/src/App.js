@@ -21,8 +21,9 @@ import ExpProducts from "./component/ExploreProduct/ExploreData";
 
 const App = () => {
   const [productId, setProductId] = useState("");
+  const [wishListProductId, setWishListProductId] = useState("");
   const [cartAllProduct, setCartAllProduct] = useState([]);
-  
+  const [wishListAllProduct, setWishListAllProduct] = useState([]);
 
   useEffect(() => {
     const filterdObject = products.filter((product) => product.id == productId);
@@ -49,22 +50,44 @@ const App = () => {
     }
   }, [productId]);
 
+  useEffect(() => {
+    const filterdObject = products.filter((product) => product.id == wishListProductId);
+    const filterdObjectExpD = ExpProducts.filter(
+      (product) => product.id == wishListProductId
+    );
+
+    const combinedFilteredObjects = [...filterdObject, ...filterdObjectExpD];
+
+    if (combinedFilteredObjects.length > 0) {
+      setWishListAllProduct((prevWishList) => {
+        // Check if the product is already in the wish list
+        const isProductInWishList = prevWishList.some(
+          (product) => product.id == wishListProductId
+        );
+        if (!isProductInWishList) {
+          return [...prevWishList, ...combinedFilteredObjects];
+        }
+        return prevWishList;
+      });
+    }
+  }, [wishListProductId]);
+
   return (
     <div className="app">
       <Router>
         <AuthProvider>
-          <Header cartAllProduct={cartAllProduct} />
+          <Header cartAllProduct={cartAllProduct} wishListAllProduct={wishListAllProduct} />
           <Routes>
             <Route
               path="/"
               element={
                 <>
                   <HomePage />
-                  <FlashSales setProductId={setProductId} />
+                  <FlashSales setProductId={setProductId} setWishListProductId={setWishListProductId} />
                   <Category />
                   <BookList />
                   <AdsBox />
-                  <ProductList setProductId={setProductId} />
+                  <ProductList setProductId={setProductId} setWishListProductId={setWishListProductId} />
                   <BookCollection />
                   <Footer />
                 </>
@@ -73,8 +96,8 @@ const App = () => {
             <Route path="/heartPage" 
                     element={
                     <HeartPage
-                    cartAllProduct={cartAllProduct}
-                  setCartAllProduct={setCartAllProduct}
+                    wishListAllProduct={wishListAllProduct}
+                  setWishListAllProduct={setWishListAllProduct}
                    />} />
             <Route
               path="/cartBoxPage"

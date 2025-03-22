@@ -8,7 +8,7 @@ import products from "./FlashData";
 import './FlashSale.css'
 import { assets } from "../../image/assets";
 
-const FlashSale = ({setProductId}) => {
+const FlashSale = ({ setProductId, setWishListProductId }) => {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(315596);
   const [startIndex, setStartIndex] = useState(0);
@@ -46,7 +46,7 @@ const FlashSale = ({setProductId}) => {
 
   const addToList = (id) => {
     toast.success("Product added to wishList", id);
-    setProductId(id);
+    setWishListProductId(id);
     console.log("Product added to wishList", id);
   };
 
