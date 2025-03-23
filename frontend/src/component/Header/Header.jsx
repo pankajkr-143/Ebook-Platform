@@ -27,7 +27,7 @@ function Header({cartAllProduct, wishListAllProduct}) {
 
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
-    console.log("user:", user);
+    console.log("testingUser:", user);
   }, [isLoggedIn, user]);
 
   return (

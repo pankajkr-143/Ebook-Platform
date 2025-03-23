@@ -4,11 +4,12 @@ import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 import products from "./FlashData";
-
 import './FlashSale.css'
 import { assets } from "../../image/assets";
+import { useAuth } from '../../store/auth';
 
 const FlashSale = ({ setProductId, setWishListProductId }) => {
+  const { isLoggedIn, user } = useAuth();
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(315596);
   const [startIndex, setStartIndex] = useState(0);
@@ -45,15 +46,35 @@ const FlashSale = ({ setProductId, setWishListProductId }) => {
   };
 
   const addToList = (id) => {
-    toast.success("Product added to wishList", id);
-    setWishListProductId(id);
-    console.log("Product added to wishList", id);
+    if (!isLoggedIn) {
+      alert("Please login");
+      navigate("/login");
+      return; // Ensure function exits here if not logged in
+    }
+    
+    try {
+      toast.success("Product added to wishList");
+      setWishListProductId(id); // Ensure this function is defined
+      console.log("Product added to wishList:", id);
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+    }
   };
 
   const addToCart = (id) => {
-    toast.success("Product added to cart", id);
-    setProductId(id);
-    console.log("Product added to cart", id);
+    if (!isLoggedIn) {
+      alert("Please login");
+      navigate("/login");
+      return; // Ensure function exits here if not logged in
+    }
+    
+    try {
+      toast.success("Product added to cart");
+      setProductId(id); // Ensure this function is defined
+      console.log("Product added to cart:", id);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
   };
 
 

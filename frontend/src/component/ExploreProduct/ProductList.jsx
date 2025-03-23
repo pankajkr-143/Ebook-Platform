@@ -4,7 +4,7 @@ import { FaHeart, FaEye, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa
 import { assets } from "../../image/assets";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../../store/auth";
 import ExpProducts from "./ExploreData";
 
 // Function to render stars based on rating
@@ -27,18 +27,42 @@ const renderStars = (rating) => {
 };
 
 // Product Card Component
-const ProductCard = ({ product, setProductId, setWishListProductId }) => {
-  const addToCart = (id) => {
-    toast.success("Product added to cart", id);
-    setProductId(id);
-    console.log("Product added to cart", id);
-  };
+const ProductCard = ({ isLoggedIn, user, product, setProductId, setWishListProductId }) => {
 
-  const addToList = (id) => {
-    toast.success("Product added to wishList", id);
-    setWishListProductId(id);
-    console.log("Product added to wishList", id);
-  };
+  const navigate = useNavigate();
+
+  const addToCart = (id) => {
+      if (!isLoggedIn) {
+        alert("Please login");
+        navigate("/login");
+        return; // Ensure function exits here if not logged in
+      }
+      
+      try {
+        toast.success("Product added to cart");
+        setProductId(id); // Ensure this function is defined
+        console.log("Product added to cart:", id);
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+      }
+    };
+  
+
+    const addToList = (id) => {
+      if (!isLoggedIn) {
+        alert("Please login ");
+        navigate("/login");
+        return; // Ensure function exits here if not logged in
+      }
+      
+      try {
+        toast.success("Product added to wishList");
+        setWishListProductId(id); // Ensure this function is defined
+        console.log("Product added to wishList:", id);
+      } catch (error) {
+        console.error("Error adding to wishlist:", error);
+      }
+    };
 
   return (
     <Card className="product-card p-2 shadow-sm">
@@ -69,6 +93,7 @@ const ProductCard = ({ product, setProductId, setWishListProductId }) => {
 
 // Main Product Listing Page
 const ProductList = ({ setProductId, setWishListProductId }) => {
+  const { isLoggedIn, user } = useAuth();
 
   return (
     <Container className="py-5 mt-5">
@@ -87,7 +112,13 @@ const ProductList = ({ setProductId, setWishListProductId }) => {
       <Row className="g-4">
         {ExpProducts.map((product) => (
           <Col key={product?.id} md={3} sm={6}>
-            <ProductCard product={product} setProductId={setProductId} setWishListProductId={setWishListProductId} />
+            <ProductCard
+              product={product}
+              setProductId={setProductId}
+              setWishListProductId={setWishListProductId}
+              isLoggedIn={isLoggedIn}
+              user={user}
+            />
           </Col>
         ))}
       </Row>
