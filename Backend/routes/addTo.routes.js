@@ -11,27 +11,20 @@ const {
 const cartControllers = require("../controllers/cart.controllers");
 const wishListControllers = require("../controllers/wishList.controllers");
 
-// Registering a new user
-router.post(
-  "/register",
-  registerValidationRules,
-  validateRequest,
-  userControllers.registerUser
-);
 
-// Login a user
-router.post(
-  "/login",
-  loginValidationRules,
-  validateRequest,
-  userControllers.loginUser
-);
 
-// Get user profile
-router.get("/profile", authUser, userControllers.getUserProfile);
 
-// Logout a user
-router.get("/logout", authUser, userControllers.logoutUser);
+// Add to cart
+router.post("/cart", authUser, cartControllers.cartData);
+
+// Get cart data
+router.get("/cart", authUser, cartControllers.getCartData);
+
+// Add to wishlist
+router.post("/wishlist", authUser, wishListControllers.wishListData);
+
+// Get wishlist data
+router.get("/wishlist", authUser, wishListControllers.getWishListData);
 
 
 module.exports = router;
