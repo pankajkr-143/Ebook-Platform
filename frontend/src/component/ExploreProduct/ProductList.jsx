@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from "react";
+import axios from 'axios';
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaHeart, FaEye, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { assets } from "../../image/assets";
@@ -9,6 +10,9 @@ import ExpProducts from "./ExploreData";
 
 // Function to render stars based on rating
 const renderStars = (rating) => {
+  if (typeof rating !== "number" || rating < 0) {
+    rating = 0; 
+  }
   const fullStars = Math.floor(rating);
   const halfStar = rating % 1 !== 0;
   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
@@ -28,64 +32,74 @@ const renderStars = (rating) => {
 
 // Product Card Component
 const ProductCard = ({ isLoggedIn, user, product, setProductId, setWishListProductId }) => {
-
   const navigate = useNavigate();
 
-  const addToCart = (id) => {
-      if (!isLoggedIn) {
-        alert("Please login");
-        navigate("/login");
-        return; // Ensure function exits here if not logged in
-      }
-      
-      try {
-        toast.success("Product added to cart");
-        setProductId(id); // Ensure this function is defined
-        console.log("Product added to cart:", id);
-      } catch (error) {
-        console.error("Error adding to cart:", error);
-      }
-    };
-  
+  const addToCart = async (id) => {
+    if (!isLoggedIn) {
+      alert("Please login");
+      navigate("/login");
+      return;
+    }
 
-    const addToList = (id) => {
-      if (!isLoggedIn) {
-        alert("Please login ");
-        navigate("/login");
-        return; // Ensure function exits here if not logged in
-      }
-      
-      try {
-        toast.success("Product added to wishList");
-        setWishListProductId(id); // Ensure this function is defined
-        console.log("Product added to wishList:", id);
-      } catch (error) {
-        console.error("Error adding to wishlist:", error);
-      }
-    };
+    try {
+      toast.success("Product added to cart");
+      setProductId(id);
+      const response = await axios.post("http://localhost:4000/cart", {
+        userId: user._id,
+        products: [product], // Use the product prop
+      });
+      console.log("Response from server:", response.data);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
+  const addToList = async (id) => {
+    if (!isLoggedIn) {
+      alert("Please login");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      toast.success("Product added to wishList");
+      setWishListProductId(id);
+      const response = await axios.post("http://localhost:4000/wishlist", {
+        userId: user._id,
+        products: [product], // Use the product prop
+      });
+      console.log("Response from server:", response.data);
+    } catch (error) {
+      console.error("Error saving wishlist item:", error);
+    }
+  };
 
   return (
     <Card className="product-card p-2 shadow-sm">
-      
       <div className="position-relative">
-        <Card.Img variant="top" src={product.image} className="product-img"  />
+        <Card.Img variant="top" src={product.image} className="product-img" />
         <div className="wishlist-icons position-absolute top-0 end-0 p-2">
           <div className="d-flex flex-column gap-3">
             <button onClick={() => addToList(product.id)}>
-            <FaHeart className="icon me-2" />
+              <FaHeart className="icon me-2" />
             </button>
-          <FaEye className="icon" />
+            <FaEye className="icon" />
           </div>
-         
         </div>
       </div>
       <Card.Body className="text-center">
-      <p className="text-center fs-3">{product.title}</p>
+        <p className="text-center fs-3">{product.title}</p>
         <Card.Text className="product-price text-danger">${product.price}</Card.Text>
         <div className="rating">
           {renderStars(product.rating)} ({product.reviews})
         </div>
-        <Button variant="dark" className="w-100 mt-2" onClick={() => addToCart(product.id)}>Add To Cart</Button>
+        <Button
+          variant="dark"
+          className="w-100 mt-2"
+          onClick={() => addToCart(product.id)}
+        >
+          Add To Cart
+        </Button>
       </Card.Body>
     </Card>
   );

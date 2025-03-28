@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import products from "./FlashData";
-import './FlashSale.css'
+import "./FlashSale.css";
 import { assets } from "../../image/assets";
-import { useAuth } from '../../store/auth';
+import { useAuth } from "../../store/auth";
 
 const FlashSale = ({ setProductId, setWishListProductId }) => {
   const { isLoggedIn, user } = useAuth();
@@ -22,10 +23,10 @@ const FlashSale = ({ setProductId, setWishListProductId }) => {
   }, []);
 
   // useEffect(() => {
-  //   products.forEach(product => {
-  //     console.log("Product:", product);
+  //   products.forEach((product) => {
+  //     console.log("Product:", product); // Ensure data is logging
   //   });
-  // }, [products]);
+  // }, []);
 
   const formatTime = (seconds) => {
     const days = Math.floor(seconds / (3600 * 24));
@@ -45,38 +46,47 @@ const FlashSale = ({ setProductId, setWishListProductId }) => {
     setStartIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
   };
 
-  const addToList = (id) => {
+  const addToList = async (id) => {
     if (!isLoggedIn) {
       alert("Please login");
       navigate("/login");
-      return; // Ensure function exits here if not logged in
+      return;
     }
-    
+
+    const product = products.find((item) => item.id === id);
     try {
       toast.success("Product added to wishList");
-      setWishListProductId(id); // Ensure this function is defined
-      console.log("Product added to wishList:", id);
+      setWishListProductId(id);
+      const response = await axios.post("http://localhost:4000/wishlist", {
+        userId: user._id,
+        products: [product], 
+      });
+      console.log("Response from server:", response.data);
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
+      console.error("Error saving wishlist item:", error);
     }
   };
 
-  const addToCart = (id) => {
+  const addToCart = async (id) => {
     if (!isLoggedIn) {
       alert("Please login");
       navigate("/login");
-      return; // Ensure function exits here if not logged in
+      return;
     }
-    
+
+    const product = products.find((item) => item.id === id);
     try {
       toast.success("Product added to cart");
-      setProductId(id); // Ensure this function is defined
-      console.log("Product added to cart:", id);
+      setProductId(id);
+      const response = await axios.post("http://localhost:4000/cart", {
+        userId: user._id,
+        products: [product],
+      });
+      console.log("Response from server:", response.data);      
     } catch (error) {
-      console.error("Error adding to cart:", error);
+      console.error("Error saving cart item:", error);
     }
   };
-
 
   return (
     <>
@@ -88,37 +98,71 @@ const FlashSale = ({ setProductId, setWishListProductId }) => {
         <div className="d-flex justify-content-between align-items-center">
           <h2>Flash Sales</h2>
           <div className="d-flex mx-4">
-            <div className="mx-2">Days<div className="fw-bold">{String(days).padStart(2, "0")}</div></div>
-            <div className="mx-2">Hours<div className="fw-bold">{String(hours).padStart(2, "0")}</div></div>
-            <div className="mx-2">Minutes<div className="fw-bold">{String(minutes).padStart(2, "0")}</div></div>
-            <div className="mx-2">Seconds<div className="fw-bold">{String(secs).padStart(2, "0")}</div></div>
+            <div className="mx-2">
+              Days<div className="fw-bold">{String(days).padStart(2, "0")}</div>
+            </div>
+            <div className="mx-2">
+              Hours<div className="fw-bold">{String(hours).padStart(2, "0")}</div>
+            </div>
+            <div className="mx-2">
+              Minutes<div className="fw-bold">{String(minutes).padStart(2, "0")}</div>
+            </div>
+            <div className="mx-2">
+              Seconds<div className="fw-bold">{String(secs).padStart(2, "0")}</div>
+            </div>
           </div>
           <div className="d-flex arrow">
-            <img className="mx-3 cursor-pointer" src={assets.leftArrow} alt="Left" onClick={handlePrev} style={{ cursor: "pointer", transition: "transform 0.3s ease-in-out" }} />
-            <img className="cursor-pointer" src={assets.rightArrow} alt="Right" onClick={handleNext} style={{ cursor: "pointer", transition: "transform 0.3s ease-in-out" }} />
+            <img
+              className="mx-3 cursor-pointer"
+              src={assets.leftArrow}
+              alt="Left"
+              onClick={handlePrev}
+              style={{ cursor: "pointer", transition: "transform 0.3s ease-in-out" }}
+            />
+            <img
+              className="cursor-pointer"
+              src={assets.rightArrow}
+              alt="Right"
+              onClick={handleNext}
+              style={{ cursor: "pointer", transition: "transform 0.3s ease-in-out" }}
+            />
           </div>
         </div>
 
         <div className="overflow-hidden position-relative">
           <Toaster />
-          <Row className="mt-4 flex-nowrap" style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(-${startIndex * 25}%)` }}>
+          <Row
+            className="mt-4 flex-nowrap"
+            style={{
+              transition: "transform 0.5s ease-in-out",
+              transform: `translateX(-${startIndex * 25}%)`,
+            }}
+          >
             {products.map((product) => (
               <Col md={3} key={product.id} className="mb-4">
-                <Card className="p-2 shadow-sm position-relative ">
-                  <span className="badge bg-danger position-absolute top-0 end-0 m-2">-{product.discount}%</span>
+                <Card className="p-2 shadow-sm position-relative">
+                  <span className="badge bg-danger position-absolute top-0 end-0 m-2">
+                    -{product.discount}%
+                  </span>
                   <div className="inner-content-cart d-flex flex-column gap-2">
                     <button onClick={() => addToList(product.id)}>
                       <img src={assets.heart} alt="" />
                     </button>
                     <img src={assets.View} alt="" />
                   </div>
-                  <Card.Img variant="top" src={product.image} alt={product.title} className="degin-img" />
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    alt={product.title}
+                    className="degin-img"
+                  />
                   <Card.Body>
-                    {/* <Card.Title>{product.title}</Card.Title> */}
                     <h5>{product.title}</h5>
                     <div className="d-flex align-items-center">
                       <span className="text-danger fw-bold">${product.price}</span>
-                      <span className="text-muted ms-2 text-decoration-line-through">${product.originalPrice}</span>
+                      <span className="text-muted ms-2 text-decoration-line-through">
+                        ${product.originalPrice}
+                      </span>
                     </div>
                     <div>
                       {[...Array(5)].map((_, i) => (
@@ -126,7 +170,13 @@ const FlashSale = ({ setProductId, setWishListProductId }) => {
                       ))}
                       <small className="ms-2">({product.reviews})</small>
                     </div>
-                    <Button className="w-100 mt-2" variant="dark" onClick={() => addToCart(product.id)}>Add To Cart</Button>
+                    <Button
+                      className="w-100 mt-2"
+                      variant="dark"
+                      onClick={() => addToCart(product.id)}
+                    >
+                      Add To Cart
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
